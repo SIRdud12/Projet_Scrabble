@@ -10,20 +10,35 @@
 #include <time.h>
 #include <stdlib.h>
 
-struct joueurs {
+typedef struct {
     char nom[50];
     int numero;
-};
+}joueurs;
+typedef struct {
+    char lettre;
+    int valeur;
+}jeton;
+typedef struct { // structure representant un jeton du chevalet du joueur
+    jeton jeton;
+    int position; // position sur le chevalet
+    int pioche[];
+}jetonChevalet;
 
 void remplirtableau(char tab[15][15]);
 
 void affichertab(char tab[15][15]);
 
-void saisirjoueur(struct joueurs tab1[], int nombre);
+void saisirjoueur(joueurs tab1[], int nombre);
 
-void afficherjoueur(struct joueurs tab1[], int nombre);
+void afficherjoueur(joueurs tab1[], int nombre);
 
-void ordredepassage(struct joueurs tab1[], int nombre);
+void ordredepassage( joueurs tab1[], int nombre);
+
+void initialisationpioche(jeton pioche[],int taille);
+
+jeton tirerjeton(jeton pioche[], int *taillepioche);
+
+void initialisationducChevalet(jetonChevalet chevalet[],jeton structjetons[], int *taillepioche, int tailleChevalet);
 
 
 #endif //PROJET_SCRABBLE_HEAD_H

@@ -96,40 +96,40 @@ void affichertab(char tab[15][15]) { // tableau bidimensionelle
 
 // sous programme des joueurs
 
-void saisirjoueur(struct joueurs tab1[], int nombre) {
+void saisirjoueur(joueurs tab1[], int nombre) {
 
     for (int i = 0; i < nombre; i++) {
         printf("Veuillez entrer le nom du joueur %d:", i + 1);
         scanf("%s", tab1[i].nom);
     }
     for (int i = 0; i < nombre; i++) {
-        tab1[i].numero = rand() % (6 - 1 + 1) + 1;
+        tab1[i].numero = rand() % (6 - 1 + 1) + 1;// genere des nombre aleatoire de 1 a 6
     }
 }
 
-void afficherjoueur(struct joueurs tab1[], int nombre) {
+void afficherjoueur(joueurs tab1[], int nombre) {
 
     for (int i = 0; i < nombre; i++) {
         printf("Le nombre de %s est :%d\n", tab1[i].nom, tab1[i].numero);
     }
 }
 
-void ordredepassage(struct joueurs tab1[], int nombre){
+void ordredepassage(joueurs tab1[], int nombre) {
     char t[4];
-    for(int i=0;i<nombre;i++){
-        for(int j=i+1;j<nombre;j++){
-            if(tab1[i].numero > tab1[j].numero){ // comparaison par le nombre aléatoire
+    for (int i = 0; i < nombre; i++) {
+        for (int j = i + 1; j < nombre; j++) {
+            if (tab1[i].numero > tab1[j].numero) { // comparaison par le nombre aléatoire
                 strcpy(t, tab1[i].nom);
-                strcpy(tab1[i].nom,tab1[j].nom);
-                strcpy(tab1[j].nom,t);
+                strcpy(tab1[i].nom, tab1[j].nom);
+                strcpy(tab1[j].nom, t);
 
                 int temp = tab1[i].numero;
                 tab1[i].numero = tab1[j].numero;
                 tab1[j].numero = temp;
-            } else if (tab1[i].numero == tab1[j].numero){
-                if(strcmp(tab1[i].nom,tab1[j].nom) > 0){
-                    strcpy(t,tab1[i].nom);
-                    strcpy(tab1[i].nom,tab1[j].nom);
+            } else if (tab1[i].numero == tab1[j].numero) {// comparaison par le nom
+                if (strcmp(tab1[i].nom, tab1[j].nom) > 0) {
+                    strcpy(t, tab1[i].nom);
+                    strcpy(tab1[i].nom, tab1[j].nom);
                     strcpy(tab1[j].nom, t);
 
                     int temp = tab1[i].numero;
@@ -139,7 +139,49 @@ void ordredepassage(struct joueurs tab1[], int nombre){
             }
         }
     }
-    for(int i=0;i<nombre;i++){
-        printf("Le joueur %d est %s avec le nombre %d\n",i+1,tab1[i].nom,tab1[i].numero);
+    for (int i = 0; i < nombre; i++) {
+        printf("Le joueur %d est %s avec le nombre %d\n", i + 1, tab1[i].nom, tab1[i].numero);
+    }
+}
+
+// sous programme d'initialisation de la pioche
+void initialisationpioche(jeton  pioche[], int taille) {
+    // liste des jetons avec les occurences
+    char lettres[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+                      'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '?'};
+    int occurence[] = {9, 2, 2, 3, 15, 2, 2, 2, 8, 1, 1, 5, 3, 6, 6, 2, 1, 6, 6, 6, 6, 2, 1, 1, 1, 1, 2};
+    int valeursenpoints[] = {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 10, 1, 2, 1, 1, 3, 8, 1, 1, 1, 1, 4, 10, 10, 10, 10, 0};
+
+    // initialisation de la pioche en fonctions des occurrences
+    int index = 0;
+    for (int i = 0; i < sizeof(occurence) / sizeof(occurence[0]); i++) {
+        for (int j = 0; j < occurence[i]; j++) {
+            pioche[index].lettre = lettres[i];
+            pioche[index].valeur = valeursenpoints[i];
+            index++;
+        }
+    }
+    // melange de la pioche
+    srand((unsigned int)time(NULL));
+    for (int i = taille - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        // echange de la pioche de maniere aleatoire entre i et j
+        jeton temp = pioche[i];
+        pioche[i] = pioche[j];
+        pioche[j] = temp;
+    }
+}
+
+// fonction pour tirer un jeton de la pioche
+jeton tirerjeton(jeton pioche[], int *taillepioche) {
+    jeton jetontire = pioche[*taillepioche - 1];
+    (*taillepioche)--;
+    return jetontire;
+}
+
+void initialisationducChevalet(jetonChevalet chevalet[],jeton pioche[], int *taillepioche,int tailleChevalet) {
+    for (int i = 0; i < tailleChevalet; i++) {
+        chevalet[i].jeton = tirerjeton(pioche, taillepioche); // A REVOIR
+        chevalet[i].position = i + 1;
     }
 }
