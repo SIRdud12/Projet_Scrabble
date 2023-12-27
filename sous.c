@@ -115,7 +115,7 @@ void afficherjoueur(joueurs tab1[], int nombre) {
 }
 
 void ordredepassage(joueurs tab1[], int nombre) {
-    char t[4];
+    char t[50];
     for (int i = 0; i < nombre; i++) {
         for (int j = i + 1; j < nombre; j++) {
             if (tab1[i].numero > tab1[j].numero) { // comparaison par le nombre aléatoire

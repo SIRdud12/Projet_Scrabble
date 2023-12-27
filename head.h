@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 typedef struct {
-    char nom[50];
+    char nom[100];
     int numero;
 }joueurs;
 typedef struct {

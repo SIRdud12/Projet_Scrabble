@@ -45,10 +45,15 @@ int main() {
     initialisationducChevalet(chevalet, pioche, &taillepioche, tailleChevalet);
 
     // affichage du chevalet du joueur
-    printf("Chevalet du joueur:\n");
-    for (int i = 0; i < tailleChevalet; i++) {
-        printf("%c%d ", chevalet[i].jeton.lettre, chevalet[i].jeton.valeur);
+    for(int i=0;i<nombre;i++) {
+        initialisationducChevalet(chevalet,pioche,&taillepioche,tailleChevalet);
+        //printf("Chevalet du joueur[%d] :\n",i);
+        printf("Chevalet de %s est %c%d ", tab1[i].nom, chevalet[i].jeton.lettre,chevalet[i].jeton.valeur);// on est entrain de regler le programme de l'affichage car 8 jetons s'affichent au lieu de 7
+        for (int i = 0; i < tailleChevalet; i++) {
+            printf("%c%d ", chevalet[i].jeton.lettre, chevalet[i].jeton.valeur);
+        }
+        printf("\n");
     }
-    printf("\n");
+
     return 0;
 }
