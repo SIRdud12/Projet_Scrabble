@@ -45,8 +45,8 @@ int main() {
     initialisationducChevalet(chevalet, pioche, &taillepioche, tailleChevalet);
 
     // affichage du chevalet du joueur
-    for(int i=0;i<nombre;i++) {
-        initialisationducChevalet(chevalet,pioche,&taillepioche,tailleChevalet);
+    for (int i = 0; i < nombre; i++) {
+        initialisationducChevalet(chevalet, pioche, &taillepioche, tailleChevalet);
         //printf("Chevalet du joueur[%d] :\n",i);
         printf("Chevalet de %s est :", tab1[i].nom);// Les 7 jetons de chaqe nom s'affiche
         for (int i = 0; i < tailleChevalet; i++) {
@@ -55,5 +55,9 @@ int main() {
         printf("\n");
     }
 
+    for (int i = 0; i < nombre; i++) {
+        printf("%s :\n", tab1[i].nom);
+        placerMot(tab, chevalet, tailleChevalet);
+    }
     return 0;
 }

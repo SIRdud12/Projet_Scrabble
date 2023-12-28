@@ -185,3 +185,47 @@ void initialisationducChevalet(jetonChevalet chevalet[],jeton pioche[], int *tai
         chevalet[i].position = i + 1;
     }
 }
+int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet){
+    char Mot[50];
+    int ligne;
+    int colonnes;
+    char orientation;
+    // saisie du mot
+    printf("Entrez le mot à placer : ");
+    scanf("%s",Mot);
+    // saisie de l'emplacement
+    printf("Entrer la ligne :");
+    scanf("%d",&ligne);
+    printf("Entrer la colonne :");
+    scanf("%d",&colonnes);
+    printf("Entrez l'orientation (Vertical/Horizontal) :  \n");
+    scanf("%s",&orientation);
+    // verification du placement
+
+    if(orientation=='V' && (ligne + strlen(Mot) - 1 > 15)){
+        printf("Le palcement du mot est non valide : Le mot dépasse la limite du plateau.\n");
+    return 0;
+    }
+    else if(orientation == 'H' && (colonnes - 'A' + strlen(Mot)) - 1 > 15){
+        printf("Le palcement du mot est non valide : Le mot dépasse la limite du plateau.\n");
+        return 0;
+    }
+// A FAIRE : le mot à placer se situe toujours sur le plateau (aucune lettre en dehors du plateau)
+//• le 1er mot se positionne sur la case centrale (motif #)
+//• le mot à placer a au moins une lettre en commun avec les mots placés sur le plateau. Par contre, il ne
+//pourra pas écraser les lettres du plateau existante qui ne correspondent pas quand il se positionne sur
+//le plateau (placement selon les mots croisés)
+
+    for(int i=0; i<strlen(Mot);i++){
+        if(orientation == 'V'){
+            tab[ligne -1 + i][colonnes - 'A'] = Mot[i];
+        }
+        else if(orientation == 'H'){
+            tab[ligne - 1][colonnes - 'A' + i] = Mot[i];
+        }
+    }
+    // affichage du tableau aprés placement
+    affichertab(tab);
+
+    return 1;
+}

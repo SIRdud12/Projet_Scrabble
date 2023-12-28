@@ -40,5 +40,7 @@ jeton tirerjeton(jeton pioche[], int *taillepioche);
 
 void initialisationducChevalet(jetonChevalet chevalet[],jeton structjetons[], int *taillepioche, int tailleChevalet);
 
+int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet);
+
 
 #endif //PROJET_SCRABBLE_HEAD_H
