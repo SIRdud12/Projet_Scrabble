@@ -48,7 +48,7 @@ int main() {
     for(int i=0;i<nombre;i++) {
         initialisationducChevalet(chevalet,pioche,&taillepioche,tailleChevalet);
         //printf("Chevalet du joueur[%d] :\n",i);
-        printf("Chevalet de %s est %c%d ", tab1[i].nom, chevalet[i].jeton.lettre,chevalet[i].jeton.valeur);// on est entrain de regler le programme de l'affichage car 8 jetons s'affichent au lieu de 7
+        printf("Chevalet de %s est :", tab1[i].nom);// Les 7 jetons de chaqe nom s'affiche
         for (int i = 0; i < tailleChevalet; i++) {
             printf("%c%d ", chevalet[i].jeton.lettre, chevalet[i].jeton.valeur);
         }
