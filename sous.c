@@ -196,20 +196,27 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet){
     // saisie de l'emplacement
     printf("Entrer la ligne :");
     scanf("%d",&ligne);
-    printf("Entrer la colonne :");
-    scanf("%d",&colonnes);
+    printf("Entrer la colonne(Lettres) :");
+    scanf(" %d",&colonnes);
     printf("Entrez l'orientation (Vertical/Horizontal) :  \n");
     scanf("%s",&orientation);
     // verification du placement
 
     if(orientation=='V' && (ligne + strlen(Mot) - 1 > 15)){
-        printf("Le palcement du mot est non valide : Le mot dépasse la limite du plateau.\n");
+        printf("Le placement du mot est non valide : Le mot dépasse la limite du plateau.\n");
     return 0;
     }
     else if(orientation == 'H' && (colonnes - 'A' + strlen(Mot)) - 1 > 15){
-        printf("Le palcement du mot est non valide : Le mot dépasse la limite du plateau.\n");
+        printf("Le placement du mot est non valide : Le mot dépasse la limite du plateau.\n");
         return 0;
     }
+    // testttttttt pour faire en sorte que le mot soit placer sur la case centrale #
+    if(ligne == 8 && colonnes == 8 && Mot[0] != 'A'){
+        printf("Le 1er mot doit commencer sur la case centrale (motif #).\n ");
+        return 0;
+    }
+
+
 // A FAIRE : le mot à placer se situe toujours sur le plateau (aucune lettre en dehors du plateau)
 //• le 1er mot se positionne sur la case centrale (motif #)
 //• le mot à placer a au moins une lettre en commun avec les mots placés sur le plateau. Par contre, il ne
@@ -218,7 +225,7 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet){
 
     for(int i=0; i<strlen(Mot);i++){
         if(orientation == 'V'){
-            tab[ligne -1 + i][colonnes - 'A'] = Mot[i];
+            tab[ligne -1 + i][colonnes - 'A'] = Mot[i]; // je vais changer A par sa valeur ascii 65 pour voir si ça marche
         }
         else if(orientation == 'H'){
             tab[ligne - 1][colonnes - 'A' + i] = Mot[i];
@@ -229,3 +236,10 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet){
 
     return 1;
 }
+/* probleme :
+- Le placement du mot se fait uniqument sur la ligne de K peu importe la valeur de la ligne qu'on indique
+- Aucune saisir n'est prit en compte pour l'orientation a la horizontal
+- Le importe la valeur de la ligne et la colonnes le palcement se fait uniquement sur la ligne de K
+- le premier mot ne se place pas sur la case centrale ou se trouve A
+- On a pas pu saisir les deux charactere #A
+*/
