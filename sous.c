@@ -190,9 +190,10 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet){
     int ligne;
     int colonnes;
     char orientation;
+
     // saisie du mot
     printf("Entrez le mot à placer : ");
-    scanf("%s",Mot);
+    scanf("%s",&Mot);
     // saisie de l'emplacement
     printf("Entrer la ligne :");
     scanf("%d",&ligne);
@@ -211,7 +212,7 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet){
         return 0;
     }
     // testttttttt pour faire en sorte que le mot soit placer sur la case centrale #
-    if(ligne == 8 && colonnes == 8 && Mot[0] != 'A'){
+    if(ligne == 7 && colonnes == 7 && Mot[0] != 'A'){
         printf("Le 1er mot doit commencer sur la case centrale (motif #).\n ");
         return 0;
     }
@@ -232,6 +233,8 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet){
         }
     }
     // affichage du tableau aprés placement
+    //tab[ligne][colonnes];
+
     affichertab(tab);
 
     return 1;
