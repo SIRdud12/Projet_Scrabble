@@ -145,7 +145,7 @@ void ordredepassage(joueurs tab1[], int nombre) {
 }
 
 // sous programme d'initialisation de la pioche
-void initialisationpioche(jeton  pioche[], int taille) {
+void initialisationpioche(jeton pioche[], int taille) {
     // liste des jetons avec les occurences
     char lettres[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
                       'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '?'};
@@ -162,7 +162,7 @@ void initialisationpioche(jeton  pioche[], int taille) {
         }
     }
     // melange de la pioche
-    srand((unsigned int)time(NULL));
+    srand((unsigned int) time(NULL));
     for (int i = taille - 1; i > 0; i--) {
         int j = rand() % (i + 1);
         // echange de la pioche de maniere aleatoire entre i et j
@@ -179,42 +179,42 @@ jeton tirerjeton(jeton pioche[], int *taillepioche) {
     return jetontire;
 }
 
-void initialisationducChevalet(jetonChevalet chevalet[],jeton pioche[], int *taillepioche,int tailleChevalet) {
+void initialisationducChevalet(jetonChevalet chevalet[], jeton pioche[], int *taillepioche, int tailleChevalet) {
     for (int i = 0; i < tailleChevalet; i++) {
         chevalet[i].jeton = tirerjeton(pioche, taillepioche); // A REVOIR
         chevalet[i].position = i + 1;
     }
 }
-int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet){
+
+int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
     char Mot[50];
     int ligne;
-    int colonnes;
+    char colonnes;
     char orientation;
 
     // saisie du mot
     printf("Entrez le mot à placer : ");
-    scanf("%s",&Mot);
+    scanf("%s", &Mot);
     // saisie de l'emplacement
     printf("Entrer la ligne :");
-    scanf("%d",&ligne);
+    scanf("%d", &ligne);
     printf("Entrer la colonne(Lettres) :");
-    scanf(" %d",&colonnes);
+    scanf(" %c", &colonnes);
     printf("Entrez l'orientation (Vertical/Horizontal) :  \n");
-    scanf("%s",&orientation);
-    // verification du placement
+    scanf("%s", &orientation);
 
-    if(orientation=='V' && (ligne + strlen(Mot) - 1 > 15)){
+    // verification du placement
+    if (orientation == 'V' && (ligne + strlen(Mot) - 1 > 15)) {
         printf("Le placement du mot est non valide : Le mot dépasse la limite du plateau.\n");
-    return 0;
-    }
-    else if(orientation == 'H' && (colonnes + strlen(Mot)) - 1 > 15){
+        //return 0;
+    } else if (orientation == 'H' && (colonnes - 'A' + strlen(Mot)) - 1 > 15) {
         printf("Le placement du mot est non valide : Le mot dépasse la limite du plateau.\n");
-        return 0;
+        //return 0;
     }
     // testttttttt pour faire en sorte que le mot soit placer sur la case centrale #
-    if(ligne == 7 && colonnes == 7 && Mot[0] != 'A'){
+    if (ligne == 7 && colonnes == 7 && Mot[0] != 'A') {
         printf("Le 1er mot doit commencer sur la case centrale (motif #).\n ");
-        return 0;
+        //return 0;
     }
 
 
@@ -224,12 +224,13 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet){
 //pourra pas écraser les lettres du plateau existante qui ne correspondent pas quand il se positionne sur
 //le plateau (placement selon les mots croisés)
 
-    for(int i=0; i<strlen(Mot);i++){
-        if(orientation == 'V'){
-            tab[ligne -1 + i][colonnes - 'A'] = Mot[i]; // je vais changer A par sa valeur ascii 65 pour voir si ça marche
-        }
-        else if(orientation == 'H'){
-            tab[ligne - 1][colonnes - 'A' + i] = Mot[i];
+    for (int i = 0; i < strlen(Mot); i++) {
+        for (int j = 0; j < strlen(Mot); j++) {
+            if (orientation == 'V') {
+                tab[ligne - 1 + i][colonnes -'A'] = Mot[i]; // je vais changer A par sa valeur ascii 65 pour voir si ça marche
+            } else if (orientation == 'H') {
+                tab[ligne - 1][colonnes - 'A' + i] = Mot[i];
+            }
         }
     }
     // affichage du tableau aprés placement
@@ -245,4 +246,10 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet){
 - Le importe la valeur de la ligne et la colonnes le palcement se fait uniquement sur la ligne de K
 - le premier mot ne se place pas sur la case centrale ou se trouve A
 - On a pas pu saisir les deux charactere #A
+
+
+
+ decouverte :
+ le tableau aprés le placement du mot commence a partir de 6 pour les lignes
+
 */

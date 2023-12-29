@@ -10,6 +10,7 @@
 #include <time.h>
 #include <stdlib.h>
 
+
 typedef struct {
     char nom[100];
     int numero;
