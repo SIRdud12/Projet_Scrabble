@@ -206,7 +206,7 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet){
         printf("Le placement du mot est non valide : Le mot dépasse la limite du plateau.\n");
     return 0;
     }
-    else if(orientation == 'H' && (colonnes - 'A' + strlen(Mot)) - 1 > 15){
+    else if(orientation == 'H' && (colonnes + strlen(Mot)) - 1 > 15){
         printf("Le placement du mot est non valide : Le mot dépasse la limite du plateau.\n");
         return 0;
     }
@@ -238,7 +238,7 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet){
 }
 /* probleme :
 - Le placement du mot se fait uniqument sur la ligne de K peu importe la valeur de la ligne qu'on indique
-- Aucune saisir n'est prit en compte pour l'orientation a la horizontal
+- Aucune saisir n'est prit en compte pour l'orientation a la horizontal ( probleme resolu )
 - Le importe la valeur de la ligne et la colonnes le palcement se fait uniquement sur la ligne de K
 - le premier mot ne se place pas sur la case centrale ou se trouve A
 - On a pas pu saisir les deux charactere #A
