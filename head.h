@@ -41,7 +41,15 @@ jeton tirerjeton(jeton pioche[], int *taillepioche);
 
 void initialisationducChevalet(jetonChevalet chevalet[],jeton structjetons[], int *taillepioche, int tailleChevalet);
 
-int placerMot(char tab[15][15], jetonChevalet chevalet[],int tailleChevalet);
+int placerMot(char tab[15][15],jetonChevalet chevalet[], int tailleChevalet);
+
+void nouvellepartie(joueurs tab[], int nombre);
+
+void affichermenu();
+
+void afficheraide();
+
+int calculscorechaquejoueur(char Mot[50]);
 
 
 #endif //PROJET_SCRABBLE_HEAD_H

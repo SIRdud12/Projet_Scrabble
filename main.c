@@ -3,6 +3,9 @@
 int main() {
     int nombre;
     char tab[15][15]; // initialisation du tableau
+    int choixmenu;
+    int taille;
+    char Mot[50];
 
 
     printf("PLATEAU DE JEU :\n");
@@ -48,7 +51,7 @@ int main() {
     for (int i = 0; i < nombre; i++) {
         initialisationducChevalet(chevalet, pioche, &taillepioche, tailleChevalet);
         //printf("Chevalet du joueur[%d] :\n",i);
-        printf("Chevalet de %s est :", tab1[i].nom);// Les 7 jetons de chaqe nom s'affiche
+        printf("Chevalet de %s est :", tab1[i].nom);// Les 7 jetons de chaque nom s'affiche
         for (int i = 0; i < tailleChevalet; i++) {
             printf("%c%d ", chevalet[i].jeton.lettre, chevalet[i].jeton.valeur);
         }
@@ -57,7 +60,41 @@ int main() {
 
     for (int i = 0; i < nombre; i++) {
         printf("%s :\n", tab1[i].nom);
-        placerMot(tab, chevalet, tailleChevalet);
+        placerMot(tab,chevalet,tailleChevalet);
     }
+    printf("\n");
+
+    /*// calcule score du mot apres chaque coup
+    int score;
+    for(int i=0;i<nombre;i++){
+        score = calculscorechaquejoueur(Mot);
+        printf("Le score du joueur %s est:%d\n",tab1[i].nom,score);
+    }
+    printf("\n");*/
+
+    do{
+        affichermenu();
+        printf("\n");
+        printf("Veuillez choisir une option du Menu (1-4): ");
+        scanf("%d",&choixmenu);
+
+        switch (choixmenu) {
+            case 1:
+                nouvellepartie(tab,nombre);
+                break;
+            case 2:
+                afficheraide();
+                break;
+            case 3:
+                calculscorechaquejoueur(Mot);
+                break;
+            case 4:
+                printf("Quitter le jeu...\n");
+                return 0;
+            default:
+                printf("Option invalide. Veuillez choisir une option valide.\n");
+
+        }
+    }while (choixmenu !=4);
     return 0;
 }
