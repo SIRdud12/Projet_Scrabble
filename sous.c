@@ -13,7 +13,6 @@ void remplirtableau(char tab[15][15]) { // tableau bidimensionelle
     }
     // remplissage manuelle de chaque charactere specifique
     tab[0][0] = '6';
-
     tab[0][3] = '&';
     tab[0][7] = '6';
     tab[0][11] = '&';
@@ -44,7 +43,7 @@ void remplirtableau(char tab[15][15]) { // tableau bidimensionelle
     tab[7][3] = '&';
     tab[7][5] = 'P';
     tab[7][6] = 'L';
-    tab[7][7] = '#A';
+    tab[7][7] = '#A'; // A
     tab[7][8] = 'N';
     tab[7][9] = 'E';
     tab[7][10] = 'T';

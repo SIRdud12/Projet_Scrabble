@@ -64,13 +64,13 @@ int main() {
     }
     printf("\n");
 
-    /*// calcule score du mot apres chaque coup
+    // calcule score du mot apres chaque coup
     int score;
     for(int i=0;i<nombre;i++){
-        score = calculscorechaquejoueur(Mot);
-        printf("Le score du joueur %s est:%d\n",tab1[i].nom,score);
+        int scoremot = calculscorechaquejoueur(Mot);
+        printf("Le score du joueur %s est:%d\n",tab1[i].nom,scoremot);
     }
-    printf("\n");*/
+    printf("\n");
 
     do{
         affichermenu();
