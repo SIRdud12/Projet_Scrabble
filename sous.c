@@ -193,7 +193,7 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
 
     // saisie du mot
     printf("Entrez le mot à placer : ");
-    scanf("%s",Mot);
+    scanf("%s", Mot);
     // saisie de l'emplacement
     printf("Entrer la ligne :");
     scanf("%d", &ligne);
@@ -202,7 +202,7 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
     printf("Entrez l'orientation (Vertical/Horizontal) :\n");
     scanf(" %c", &orientation);
 
-    printf("ligne %d colonnes %c orientation %c\n",ligne,colonnes,orientation);
+    printf("ligne %d colonnes %c orientation %c\n", ligne, colonnes, orientation);
     // verification du placement
     if (orientation == 'V' && (ligne + strlen(Mot) - 1 > 15)) {
         printf("Le placement du mot est non valide : Le mot dépasse la limite du plateau.\n");
@@ -212,25 +212,61 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
         return 0;
     }
     // testttttttt pour faire en sorte que le mot soit placer sur la case centrale #
-    if (ligne == 7 && colonnes == 'H' && Mot[0] != 'A') {
-        printf("Le 1er mot doit commencer sur la case centrale (motif #).\n ");
-        return 0;
+    /* if (ligne == 7 && colonnes == 'H' && Mot[0] != 'A') {
+         printf("Le 1er mot doit commencer sur la case centrale (motif #).\n ");
+         return 0;
+     }*/
+    int motscore = 0;
+    int multiplicateurmot = 1;
+
+    for (int i = 0; i < strlen(Mot); i++) {
+        int lettrescore = chevalet[i].jeton.valeur;
+
+        // verification des multiplicateurs de lettres
+        if (tab[ligne - 1 + i][colonnes - 'A'] == '&') {
+            lettrescore *= 2;
+        } else if (tab[ligne - 1 + i][colonnes - 'A'] == '%') {
+            lettrescore *= 3;
+        }
+        // ajoute du score de la lettre aua score du mot
+        motscore += lettrescore;
     }
+    // verification des multiplicateurs de mot
+    if (tab[ligne - 1][colonnes - 'A'] == '@') {
+        multiplicateurmot *= 2;
+    }
+    // probleme d'affichage du charactere §
+    /*else if(tab[ligne - 1][colonnes - 'A'] == '§'){
+       multiplicateurmot *= 3;
+     }*/
+
+    // calcul du score final du mot
+    motscore *= multiplicateurmot;
+
+    // prime pour un scrabble
+    motscore = calculscorechaquejoueur(Mot);
+    if (strlen(Mot) == tailleChevalet) {   // tout les mots sont deposés dans le tableau
+        printf("SCRABBLE ! Vous obtenez une prime de 50 points.");
+        motscore += 50;
+    }
+
+    //printf("score du mot |%s| : %d points\n",Mot,motscore);
+
     int motexiste = 0;
-    for(int i=0;i< strlen(Mot);i++){
-        if(orientation== 'V'){
-            if(tab[ligne - 1 + i][colonnes - 'A'] != ' ' && tab[ligne - 1 + i][colonnes - 'A'] != Mot[i]){
+    for (int i = 0; i < strlen(Mot); i++) {
+        if (orientation == 'V') {
+            if (tab[ligne - 1 + i][colonnes - 'A'] != ' ' && tab[ligne - 1 + i][colonnes - 'A'] != Mot[i]) {
                 motexiste = 1;
                 break;
             }
-        } else if (orientation == 'H'){
-            if(tab[ligne - 1][colonnes - 'A' + i] != ' ' && tab[ligne - 1][colonnes - 'A' + i] != Mot[i]){
+        } else if (orientation == 'H') {
+            if (tab[ligne - 1][colonnes - 'A' + i] != ' ' && tab[ligne - 1][colonnes - 'A' + i] != Mot[i]) {
                 motexiste = 1;
                 break;
             }
         }
     }
-    if(!motexiste){
+    if (!motexiste) {
         printf("Le mot ne s'appuie sur aucun mot déjà placé.\n");
         return 0;
     }
@@ -242,32 +278,43 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
 //le plateau (placement selon les mots croisés)
 
     for (int i = 0; i < strlen(Mot); i++) {
-            if (orientation == 'V') {
-                tab[ligne - 1 + i][colonnes -'A'] = Mot[i]; // je vais changer A par sa valeur ascii 65 pour voir si ça marche
-            } else if (orientation == 'H') {
-                tab[ligne - 1][colonnes - 'A' + i] = Mot[i];
-            }
+        if (orientation == 'V') {
+            tab[ligne - 1 + i][colonnes -
+                               'A'] = Mot[i]; // je vais changer A par sa valeur ascii 65 pour voir si ça marche
+        } else if (orientation == 'H') {
+            tab[ligne - 1][colonnes - 'A' + i] = Mot[i];
         }
+    }
     // affichage du tableau aprés placement
     //tab[ligne][colonnes];
 
     affichertab(tab);
 
     // calcule score du mot
+    // calcul du score final du mot
+    motscore *= multiplicateurmot;
+
+    // prime pour un scrabble
+    motscore = calculscorechaquejoueur(Mot);
+    if (strlen(Mot) == tailleChevalet) {   // tout les mots sont deposés dans le tableau
+        printf("SCRABBLE ! Vous obtenez une prime de 50 points.");
+        motscore += 50;
+    }
+    //printf("score du mot |%s| : %d points\n",Mot,motscore);
 
     int scoremot = calculscorechaquejoueur(Mot);
-    printf("Le score du mot |%s| est :%d\n",Mot,scoremot);
+    printf("Le score du mot |%s| est :%d points\n", Mot, scoremot);
 
     // affichage du score totale du joueur qui est la somme des mots placés a partir du chevalet
-    int scoretotal =0;
-    for(int i=0;i<tailleChevalet;i++){
-       scoretotal += calculscorechaquejoueur(Mot);
+    int scoretotal = 0;
+    for (int i = 0; i < tailleChevalet; i++) {
+        scoretotal = calculscorechaquejoueur(Mot) + scoremot;
     }
-    printf("Le score totale du joueur est :%d\n",scoretotal);
-
-   return 1;
+    printf("Le score totale du joueur est :%d points\n", scoretotal);
+    return 1;
 }
-void nouvellepartie(joueurs tab2[], int nombre){
+
+void nouvellepartie(joueurs tab2[], int nombre) {
     char tab[15][15]; // initialisation du tableau
     printf("PLATEAU DE JEU :\n");
     remplirtableau(tab); // appel du sous programme de remplissage du tableau
@@ -322,10 +369,11 @@ void nouvellepartie(joueurs tab2[], int nombre){
 
     for (int i = 0; i < nombre; i++) {
         printf("%s :\n", tab1[i].nom);
-        placerMot(tab,chevalet,tailleChevalet);
+        placerMot(tab, chevalet, tailleChevalet);
     }
 }
-void affichermenu(){
+
+void affichermenu() {
     printf("            MENU :        \n");
     printf("\n");
     printf("1. Lancer une nouvelle partie.\n");
@@ -334,7 +382,7 @@ void affichermenu(){
     printf("4. Quitter le Jeu.\n");
 }
 
-void afficheraide(){
+void afficheraide() {
     printf("Bienvenue dans le jeu Scrabble !\n");
     printf("Instructions :\n");
     printf("1. Le premier mot doit faire aumoins deux lettres et recouvrir la case centrale.\n ");
@@ -344,30 +392,39 @@ void afficheraide(){
     printf("5. Lorsque on place toutes ses lettres qui sont sur le chevalet on fait un SCRABBLE et on gagne 50 points supplementaire.\n");
     printf("6. Le vainqueur est le joueur qui cummule le plus de point a la fin de la partie.\n");
     printf("7. Chauqe lettre saisie par le joueur doit être en majuscule.\n");
+    printf("# : point de départ\n ");
+    printf("& : lettre double\n");
+    printf(" § : mot triple\n");
+    printf(" @ : mot double\n");
+
+
 }
 
-int calculscorechaquejoueur(char Mot[50]){
-        // declaration des variables
-        char lettre;
-        int nombre;
+int calculscorechaquejoueur(char Mot[50]) {
+    // declaration des variables
+    char lettre;
+    int nombre;
 
-    int valeursenpoints[] = {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 10, 1, 2, 1, 1, 3, 8, 1, 1, 1, 1, 4, 10, 10, 10, 10, 0};//int valeurs_en_points_des_lettres[26] = {1,3,3,2,1,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
+    int valeursenpoints[] = {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 10, 1, 2, 1, 1, 3, 8, 1, 1, 1, 1, 4, 10, 10, 10, 10,
+                             0};//int valeurs_en_points_des_lettres[26] = {1,3,3,2,1,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
     //placerMot(tab);
-        int score = 0; // initialisation du score a zero
-        for(int i=0;i<strlen(Mot);i++){ // cette boucle permet calculer le score depuis la prémière letter jusqu'au dernier
-           // lettre = Mot[i] - 'A'; // est utilisé pour convertir une lettre en majuscule en un nombre correspondant à sa position dans l'alphabet
-           // score = score + valeursenpoints[lettre];
-           lettre = Mot[i];
-           if((lettre >=  'A' && lettre <= 'Z') || (lettre>= 'a' && lettre <= 'z')){ // si la lettre est une majuscule ou en minuscule le score sera ajouter
-            if(lettre>= 'a' && lettre <= 'z'){
+    int score = 0; // initialisation du score a zero
+    for (int i = 0;
+         i < strlen(Mot); i++) { // cette boucle permet calculer le score depuis la prémière letter jusqu'au dernier
+        // lettre = Mot[i] - 'A'; // est utilisé pour convertir une lettre en majuscule en un nombre correspondant à sa position dans l'alphabet
+        // score = score + valeursenpoints[lettre];
+        lettre = Mot[i];
+        if ((lettre >= 'A' && lettre <= 'Z') ||
+            (lettre >= 'a' && lettre <= 'z')) { // si la lettre est une majuscule ou en minuscule le score sera ajouter
+            if (lettre >= 'a' && lettre <= 'z') {
                 lettre = lettre - 'a' + 'A';
             }
-            score+=valeursenpoints[lettre - 'A'];
-           }
-
+            score += valeursenpoints[lettre - 'A'];
         }
-    return score;
+
     }
+    return score;
+}
 
 
 /* probleme :
@@ -376,7 +433,8 @@ int calculscorechaquejoueur(char Mot[50]){
 - Le importe la valeur de la ligne et la colonnes le palcement se fait uniquement sur la ligne de K ( probleme resolu )
 - le premier mot ne se place pas sur la case centrale ou se trouve A
 - On a pas pu saisir les deux charactere #A
-
+-probleme d'affichage du charactere §
+- le choix 3 du menu n'affichent pas le score des differents joueur
 
 
  decouverte :

@@ -60,33 +60,37 @@ int main() {
 
     for (int i = 0; i < nombre; i++) {
         printf("%s :\n", tab1[i].nom);
-        placerMot(tab,chevalet,tailleChevalet);
+        placerMot(tab, chevalet, tailleChevalet);
     }
     printf("\n");
 
     // calcule score du mot apres chaque coup
-    int score;
-    for(int i=0;i<nombre;i++){
-        int scoremot = calculscorechaquejoueur(Mot);
-        printf("Le score du joueur %s est:%d\n",tab1[i].nom,scoremot);
+    for (int i = 0; i < nombre; i++) {
+        int resultat = calculscorechaquejoueur(Mot);
+        printf("Le score du joueur %s est:%d\n", tab1[i].nom, resultat);
     }
     printf("\n");
 
-    do{
+    do {
         affichermenu();
         printf("\n");
         printf("Veuillez choisir une option du Menu (1-4): ");
-        scanf("%d",&choixmenu);
+        scanf("%d", &choixmenu);
 
         switch (choixmenu) {
             case 1:
-                nouvellepartie(tab,nombre);
+                nouvellepartie(tab, nombre);
                 break;
             case 2:
                 afficheraide();
                 break;
             case 3:
-                calculscorechaquejoueur(Mot);
+                for (int i = 0; i < nombre; i++) {
+                    int resultat = calculscorechaquejoueur(Mot);
+                    printf("Le score du joueur %s est %d points\n", tab1[i].nom,
+                           resultat); // Probleme !!!! : Le score des Joueurs ne f'affichent pas ils affichent 0
+                }
+
                 break;
             case 4:
                 printf("Quitter le jeu...\n");
@@ -95,6 +99,6 @@ int main() {
                 printf("Option invalide. Veuillez choisir une option valide.\n");
 
         }
-    }while (choixmenu !=4);
+    } while (choixmenu != 4);
     return 0;
 }
