@@ -229,28 +229,30 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
             lettrescore *= 3;
         }
         // ajoute du score de la lettre aua score du mot
-        motscore += lettrescore;
+       motscore += lettrescore;
     }
     // verification des multiplicateurs de mot
     if (tab[ligne - 1][colonnes - 'A'] == '@') {
         multiplicateurmot *= 2;
+       // motscore *= 2; // doubler le mot
     }
     // probleme d'affichage du charactere §
-    /*else if(tab[ligne - 1][colonnes - 'A'] == '§'){
+    else if(tab[ligne - 1][colonnes - 'A'] == '6'){ // normalement §
        multiplicateurmot *= 3;
-     }*/
-
+     }
     // calcul du score final du mot
     motscore *= multiplicateurmot;
+
+    printf("score du mot |%s| avec multiplicateur : %d points\n",Mot,motscore);
 
     // prime pour un scrabble
     motscore = calculscorechaquejoueur(Mot);
     if (strlen(Mot) == tailleChevalet) {   // tout les mots sont deposés dans le tableau
-        printf("SCRABBLE ! Vous obtenez une prime de 50 points.");
+        printf("SCRABBLE ! Vous obtenez une prime de 50 points.\n");
         motscore += 50;
+        printf("score du mot |%s| avec prime : %d points\n",Mot,motscore);
     }
 
-    //printf("score du mot |%s| : %d points\n",Mot,motscore);
 
     int motexiste = 0;
     for (int i = 0; i < strlen(Mot); i++) {
@@ -295,7 +297,7 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
     motscore *= multiplicateurmot;
 
     // prime pour un scrabble
-    motscore = calculscorechaquejoueur(Mot);
+    //motscore = calculscorechaquejoueur(Mot);
     if (strlen(Mot) == tailleChevalet) {   // tout les mots sont deposés dans le tableau
         printf("SCRABBLE ! Vous obtenez une prime de 50 points.");
         motscore += 50;
@@ -308,14 +310,14 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
     // affichage du score totale du joueur qui est la somme des mots placés a partir du chevalet
     int scoretotal = 0;
     for (int i = 0; i < tailleChevalet; i++) {
-        scoretotal = calculscorechaquejoueur(Mot) + scoremot;
+        scoretotal += scoremot;//calculscorechaquejoueur(Mot);
     }
     printf("Le score totale du joueur est :%d points\n", scoretotal);
     return 1;
 }
 
-void nouvellepartie(joueurs tab2[], int nombre) {
-    char tab[15][15]; // initialisation du tableau
+void nouvellepartie(joueurs tab2[], int nombre, char tab[15][15]) {
+    //char tab[15][15]; // initialisation du tableau
     printf("PLATEAU DE JEU :\n");
     remplirtableau(tab); // appel du sous programme de remplissage du tableau
     affichertab(tab); // appel du sous programme d'ffichage du tableau
@@ -371,6 +373,11 @@ void nouvellepartie(joueurs tab2[], int nombre) {
         printf("%s :\n", tab1[i].nom);
         placerMot(tab, chevalet, tailleChevalet);
     }
+    // calcul score
+
+    for(int i=0;i<nombre;i++){
+        printf("Le score du joueur %s est : %d points\n",tab1[i].nom, calculscorechaquejoueur(tab1[i].nom));
+    }
 }
 
 void affichermenu() {
@@ -391,7 +398,7 @@ void afficheraide() {
     printf("4. Il n'est pas possible de poser un mot en diagonale.\n");
     printf("5. Lorsque on place toutes ses lettres qui sont sur le chevalet on fait un SCRABBLE et on gagne 50 points supplementaire.\n");
     printf("6. Le vainqueur est le joueur qui cummule le plus de point a la fin de la partie.\n");
-    printf("7. Chauqe lettre saisie par le joueur doit être en majuscule.\n");
+    printf("7. Chaque lettre saisie par le joueur doit être en majuscule.\n");
     printf("# : point de départ\n ");
     printf("& : lettre double\n");
     printf(" § : mot triple\n");
@@ -405,17 +412,14 @@ int calculscorechaquejoueur(char Mot[50]) {
     char lettre;
     int nombre;
 
-    int valeursenpoints[] = {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 10, 1, 2, 1, 1, 3, 8, 1, 1, 1, 1, 4, 10, 10, 10, 10,
-                             0};//int valeurs_en_points_des_lettres[26] = {1,3,3,2,1,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
+    int valeursenpoints[] = {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 10, 1, 2, 1, 1, 3, 8, 1, 1, 1, 1, 4, 10, 10, 10, 10,0};//int valeurs_en_points_des_lettres[26] = {1,3,3,2,1,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
     //placerMot(tab);
     int score = 0; // initialisation du score a zero
-    for (int i = 0;
-         i < strlen(Mot); i++) { // cette boucle permet calculer le score depuis la prémière letter jusqu'au dernier
+    for (int i = 0;i < strlen(Mot); i++) { // cette boucle permet calculer le score depuis la prémière letter jusqu'au dernier
         // lettre = Mot[i] - 'A'; // est utilisé pour convertir une lettre en majuscule en un nombre correspondant à sa position dans l'alphabet
         // score = score + valeursenpoints[lettre];
         lettre = Mot[i];
-        if ((lettre >= 'A' && lettre <= 'Z') ||
-            (lettre >= 'a' && lettre <= 'z')) { // si la lettre est une majuscule ou en minuscule le score sera ajouter
+        if ((lettre >= 'A' && lettre <= 'Z') || (lettre >= 'a' && lettre <= 'z')) { // si la lettre est une majuscule ou en minuscule le score sera ajouter
             if (lettre >= 'a' && lettre <= 'z') {
                 lettre = lettre - 'a' + 'A';
             }
@@ -425,6 +429,8 @@ int calculscorechaquejoueur(char Mot[50]) {
     }
     return score;
 }
+
+
 
 
 /* probleme :
@@ -439,5 +445,7 @@ int calculscorechaquejoueur(char Mot[50]) {
 
  decouverte :
  le tableau aprés le placement du mot commence a partir de 6 pour les lignes
+ - LE score aprés l multiplication ne fonctionne pas sauf quand le score du mot placer est egal à 6
+ - la multiplication n'est correcte que sur la vertical et fausse sur rla horizontal
 
 */

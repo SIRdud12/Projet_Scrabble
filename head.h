@@ -14,16 +14,16 @@
 typedef struct {
     char nom[100];
     int numero;
-}joueurs;
+} joueurs;
 typedef struct {
     char lettre;
     int valeur;
-}jeton;
+} jeton;
 typedef struct { // structure representant un jeton du chevalet du joueur
     jeton jeton;
     int position; // position sur le chevalet
     int pioche[];
-}jetonChevalet;
+} jetonChevalet;
 
 void remplirtableau(char tab[15][15]);
 
@@ -33,17 +33,17 @@ void saisirjoueur(joueurs tab1[], int nombre);
 
 void afficherjoueur(joueurs tab1[], int nombre);
 
-void ordredepassage( joueurs tab1[], int nombre);
+void ordredepassage(joueurs tab1[], int nombre);
 
-void initialisationpioche(jeton pioche[],int taille);
+void initialisationpioche(jeton pioche[], int taille);
 
 jeton tirerjeton(jeton pioche[], int *taillepioche);
 
-void initialisationducChevalet(jetonChevalet chevalet[],jeton structjetons[], int *taillepioche, int tailleChevalet);
+void initialisationducChevalet(jetonChevalet chevalet[], jeton structjetons[], int *taillepioche, int tailleChevalet);
 
-int placerMot(char tab[15][15],jetonChevalet chevalet[], int tailleChevalet);
+int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet);
 
-void nouvellepartie(joueurs tab[], int nombre);
+void nouvellepartie(joueurs tab2[], int nombre, char tab[15][15]);
 
 void affichermenu();
 
