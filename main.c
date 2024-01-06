@@ -60,6 +60,7 @@ int main() {
 
     for (int i = 0; i < nombre; i++) {
         printf("%s :\n", tab1[i].nom);
+
         placerMot(tab, chevalet, tailleChevalet);
     }
     printf("\n");

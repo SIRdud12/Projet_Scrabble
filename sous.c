@@ -429,6 +429,28 @@ int calculscorechaquejoueur(char Mot[50]) {
     }
     return score;
 }
+// temps de jeu aprés chaque coups // A VERIFIER
+// Probleme : ne s'affiche pas
+void jouertouravecchronometre(char tab[15][15],int tailleChevalet,jetonChevalet chevalet[]){
+    clock_t debut,fin;
+    double tempsecoule;
+
+    debut = clock();
+    placerMot(tab,chevalet,tailleChevalet);
+
+    fin = clock();
+    tempsecoule = ((double) (fin - debut)) / CLOCKS_PER_SEC;
+    // verification du temps écoulé
+    if(tempsecoule > tempslimite) {
+        printf("Le temps est écoulé. Fin de partie pour ce joueur.\n");
+
+    }
+}
+
+
+double chrono(){
+    return (double)clock() / CLOCKS_PER_SEC;
+}
 
 
 

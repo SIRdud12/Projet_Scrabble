@@ -10,6 +10,9 @@
 #include <time.h>
 #include <stdlib.h>
 
+#define tempslimite 10 // temps en secondes accordé a chaque joueur car pas spécifié sur le cahier des charges
+
+
 
 typedef struct {
     char nom[100];
@@ -50,6 +53,12 @@ void affichermenu();
 void afficheraide();
 
 int calculscorechaquejoueur(char Mot[50]);
+
+void jouertouravecchronometre(char tab[15][15],int tailleChevalet,jetonChevalet chevalet[]);
+
+
+
+double chrono();
 
 
 #endif //PROJET_SCRABBLE_HEAD_H
