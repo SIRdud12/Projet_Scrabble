@@ -185,19 +185,19 @@ void initialisationducChevalet(jetonChevalet chevalet[], jeton pioche[], int *ta
     }
 }
 
-int existemot(char Mot[50]){
+int existemot(char Mot[50]) {
     char motdic[50];
     // creation d'un pointeur sur fichier
-   // FILE *file = NULL;
+    // FILE *file = NULL;
     // ouverture du fichier texte
-    FILE *file = fopen("../Dictionnaire.txt" , "r");
+    FILE *file = fopen("../Dictionnaire.txt", "r");
 
-    if(file == NULL){
+    if (file == NULL) {
         perror("Erreur d'ouverture\n"); // perror pour verifier la raison de l'erreur de maniere specifique
     }
 
-    while(fgets(motdic, sizeof(motdic), file) != NULL);
-    if(strcmp(Mot,motdic) == 0){
+    while (fgets(motdic, sizeof(motdic), file) != NULL);
+    if (strcmp(Mot, motdic) == 0) {
         fclose(file);
         return 1;
     }
@@ -256,28 +256,28 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
             lettrescore *= 3;
         }
         // ajoute du score de la lettre aua score du mot
-       motscore += lettrescore;
+        motscore += lettrescore;
     }
     // verification des multiplicateurs de mot
     if (tab[ligne - 1][colonnes - 'A'] == '@') {
         multiplicateurmot *= 2;
-       // motscore *= 2; // doubler le mot
+        // motscore *= 2; // doubler le mot
     }
-    // probleme d'affichage du charactere §
-    else if(tab[ligne - 1][colonnes - 'A'] == '6'){ // normalement §
-       multiplicateurmot *= 3;
-     }
+        // probleme d'affichage du charactere §
+    else if (tab[ligne - 1][colonnes - 'A'] == '6') { // normalement §
+        multiplicateurmot *= 3;
+    }
     // calcul du score final du mot
     motscore *= multiplicateurmot;
 
-    printf("score du mot |%s| avec multiplicateur : %d points\n",Mot,motscore);
+    printf("score du mot |%s| avec multiplicateur : %d points\n", Mot, motscore);
 
     // prime pour un scrabble
     motscore = calculscorechaquejoueur(Mot);
     if (strlen(Mot) == tailleChevalet) {   // tout les mots sont deposés dans le tableau
         printf("SCRABBLE ! Vous obtenez une prime de 50 points.\n");
         motscore += 50;
-        printf("score du mot |%s| avec prime : %d points\n",Mot,motscore);
+        printf("score du mot |%s| avec prime : %d points\n", Mot, motscore);
     }
 
     int motexiste = 0;
@@ -321,12 +321,11 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
 
     // verification du mot a partir du dictionnaire.txt
 
-    if(!existemot(Mot)){
-        printf("Le Mot |%s| n'est pas valide selon le dictionnaire.\n",Mot);
+    if (!existemot(Mot)) {
+        printf("Le Mot |%s| n'est pas valide selon le dictionnaire.\n", Mot);
         return 0; // O par defaut juste pour verifier que le mot n'est pas present dans le dictionnaire
-    }
-    else{
-        printf("Le Mot |%s| est valide selon le dictionnaire.\n",Mot);
+    } else {
+        printf("Le Mot |%s| est valide selon le dictionnaire.\n", Mot);
         return 1;
     }
 
@@ -414,8 +413,8 @@ void nouvellepartie(joueurs tab2[], int nombre, char tab[15][15]) {
     }
     // calcul score
 
-    for(int i=0;i<nombre;i++){
-        printf("Le score du joueur %s est : %d points\n",tab1[i].nom, calculscorechaquejoueur(tab1[i].nom));
+    for (int i = 0; i < nombre; i++) {
+        printf("Le score du joueur %s est : %d points\n", tab1[i].nom, calculscorechaquejoueur(tab1[i].nom));
     }
 }
 
@@ -451,14 +450,17 @@ int calculscorechaquejoueur(char Mot[50]) {
     char lettre;
     int nombre;
 
-    int valeursenpoints[] = {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 10, 1, 2, 1, 1, 3, 8, 1, 1, 1, 1, 4, 10, 10, 10, 10,0};//int valeurs_en_points_des_lettres[26] = {1,3,3,2,1,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
+    int valeursenpoints[] = {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 10, 1, 2, 1, 1, 3, 8, 1, 1, 1, 1, 4, 10, 10, 10, 10,
+                             0};//int valeurs_en_points_des_lettres[26] = {1,3,3,2,1,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
     //placerMot(tab);
     int score = 0; // initialisation du score a zero
-    for (int i = 0;i < strlen(Mot); i++) { // cette boucle permet calculer le score depuis la prémière letter jusqu'au dernier
+    for (int i = 0;
+         i < strlen(Mot); i++) { // cette boucle permet calculer le score depuis la prémière letter jusqu'au dernier
         // lettre = Mot[i] - 'A'; // est utilisé pour convertir une lettre en majuscule en un nombre correspondant à sa position dans l'alphabet
         // score = score + valeursenpoints[lettre];
         lettre = Mot[i];
-        if ((lettre >= 'A' && lettre <= 'Z') || (lettre >= 'a' && lettre <= 'z')) { // si la lettre est une majuscule ou en minuscule le score sera ajouter
+        if ((lettre >= 'A' && lettre <= 'Z') ||
+            (lettre >= 'a' && lettre <= 'z')) { // si la lettre est une majuscule ou en minuscule le score sera ajouter
             if (lettre >= 'a' && lettre <= 'z') {
                 lettre = lettre - 'a' + 'A';
             }
@@ -468,27 +470,28 @@ int calculscorechaquejoueur(char Mot[50]) {
     }
     return score;
 }
+
 // temps de jeu aprés chaque coups // A VERIFIER
 // Probleme : ne s'affiche pas
-void jouertouravecchronometre(char tab[15][15],int tailleChevalet,jetonChevalet chevalet[]){
-    clock_t debut,fin;
+void jouertouravecchronometre(char tab[15][15], int tailleChevalet, jetonChevalet chevalet[]) {
+    clock_t debut, fin;
     double tempsecoule;
 
     debut = clock();
-    placerMot(tab,chevalet,tailleChevalet);
+    placerMot(tab, chevalet, tailleChevalet);
 
     fin = clock();
     tempsecoule = ((double) (fin - debut)) / CLOCKS_PER_SEC;
     // verification du temps écoulé
-    if(tempsecoule > tempslimite) {
+    if (tempsecoule > tempslimite) {
         printf("Le temps est écoulé. Fin de partie pour ce joueur.\n");
 
     }
 }
 
 
-double chrono(){
-    return (double)clock() / CLOCKS_PER_SEC;
+double chrono() {
+    return (double) clock() / CLOCKS_PER_SEC;
 }
 
 // lecture du dictionnaire creer dans Dictionnaire.txt
@@ -499,15 +502,16 @@ double chrono(){
 - Le placement du mot se fait uniqument sur la ligne de K peu importe la valeur de la ligne qu'on indique ( probleme resolu )
 - Aucune saisir n'est prit en compte pour l'orientation a la horizontal ( probleme resolu )
 - Le importe la valeur de la ligne et la colonnes le palcement se fait uniquement sur la ligne de K ( probleme resolu )
-- le premier mot ne se place pas sur la case centrale ou se trouve A
 - On a pas pu saisir les deux charactere #A
 -probleme d'affichage du charactere §
 - le choix 3 du menu n'affichent pas le score des differents joueur
+ - J'arrive pas a integrer une logique pour la partie avec l'IA
+ - Le temps pour chaque coup ne secoulent pas comme dans une montre
 
 
  decouverte :
- le tableau aprés le placement du mot commence a partir de 6 pour les lignes
- - LE score aprés l multiplication ne fonctionne pas sauf quand le score du mot placer est egal à 6
- - la multiplication n'est correcte que sur la vertical et fausse sur rla horizontal
+ le tableau aprés le placement du mot commence a partir de 6 pour les lignes (probleme resolu )
+ - LE score aprés l multiplication ne fonctionne pas sauf quand le score du mot placer est egal à 6 ( probleme resolu)
+ - la multiplication n'est correcte que sur la vertical et fausse sur rla horizontal ( probleme resolu)
 
 */

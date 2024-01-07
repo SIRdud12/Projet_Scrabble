@@ -82,7 +82,7 @@ int main() {
 
         switch (choixmenu) {
             case 1:
-                nouvellepartie(tab2, nombre,tab);
+                nouvellepartie(tab2, nombre, tab);
                 break;
             case 2:
                 afficheraide();
@@ -90,7 +90,8 @@ int main() {
             case 3:
                 for (int i = 0; i < nombre; i++) {
                     int resultat = calculscorechaquejoueur(Mot);
-                    printf("Le score du joueur %s est %d points\n", tab1[i].nom,resultat); // Probleme !!!! : Le score des Joueurs ne f'affichent pas quand je choisi 3 ils affichent 0
+                    printf("Le score du joueur %s est %d points\n", tab1[i].nom,
+                           resultat); // Probleme !!!! : Le score des Joueurs ne f'affichent pas quand je choisi 3 ils affichent 0
                 }
 
                 break;

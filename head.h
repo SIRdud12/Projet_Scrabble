@@ -54,8 +54,7 @@ void afficheraide();
 
 int calculscorechaquejoueur(char Mot[50]);
 
-void jouertouravecchronometre(char tab[15][15],int tailleChevalet,jetonChevalet chevalet[]);
-
+void jouertouravecchronometre(char tab[15][15], int tailleChevalet, jetonChevalet chevalet[]);
 
 
 double chrono();
