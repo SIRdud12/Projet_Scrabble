@@ -185,15 +185,42 @@ void initialisationducChevalet(jetonChevalet chevalet[], jeton pioche[], int *ta
     }
 }
 
+int existemot(char Mot[50]){
+    char motdic[50];
+    // creation d'un pointeur sur fichier
+   // FILE *file = NULL;
+    // ouverture du fichier texte
+    FILE *file = fopen("../Dictionnaire.txt" , "r");
+
+    if(file == NULL){
+        perror("Erreur d'ouverture\n"); // perror pour verifier la raison de l'erreur de maniere specifique
+    }
+
+    while(fgets(motdic, sizeof(motdic), file) != NULL);
+    if(strcmp(Mot,motdic) == 0){
+        fclose(file);
+        return 1;
+    }
+
+    fclose(file);
+    return 0;
+}
+
+
 int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
     char Mot[50];
     int ligne;
     char colonnes;
     char orientation;
+    int Motvalide;
 
     // saisie du mot
     printf("Entrez le mot à placer : ");
     scanf("%s", Mot);
+
+
+
+
     // saisie de l'emplacement
     printf("Entrer la ligne :");
     scanf("%d", &ligne);
@@ -253,7 +280,6 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
         printf("score du mot |%s| avec prime : %d points\n",Mot,motscore);
     }
 
-
     int motexiste = 0;
     for (int i = 0; i < strlen(Mot); i++) {
         if (orientation == 'V') {
@@ -292,6 +318,18 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
 
     affichertab(tab);
 
+
+    // verification du mot a partir du dictionnaire.txt
+
+    if(!existemot(Mot)){
+        printf("Le Mot |%s| n'est pas valide selon le dictionnaire.\n",Mot);
+        return 0; // O par defaut juste pour verifier que le mot n'est pas present dans le dictionnaire
+    }
+    else{
+        printf("Le Mot |%s| est valide selon le dictionnaire.\n",Mot);
+        return 1;
+    }
+
     // calcule score du mot
     // calcul du score final du mot
     motscore *= multiplicateurmot;
@@ -309,11 +347,12 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
 
     // affichage du score totale du joueur qui est la somme des mots placés a partir du chevalet
     int scoretotal = 0;
-    for (int i = 0; i < tailleChevalet; i++) {
+    for (int i = 0; i < tailleChevalet; i++) { // A REVOIR
         scoretotal += scoremot;//calculscorechaquejoueur(Mot);
     }
     printf("Le score totale du joueur est :%d points\n", scoretotal);
     return 1;
+
 }
 
 void nouvellepartie(joueurs tab2[], int nombre, char tab[15][15]) {
@@ -452,6 +491,7 @@ double chrono(){
     return (double)clock() / CLOCKS_PER_SEC;
 }
 
+// lecture du dictionnaire creer dans Dictionnaire.txt
 
 
 
