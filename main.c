@@ -62,7 +62,9 @@ int main() {
         printf("%s :\n", tab1[i].nom);
 
         placerMot(tab, chevalet, tailleChevalet);
+
     }
+    jouertouravecchronometre(tab,tailleChevalet,chevalet);
     printf("\n");
 
     // calcule score du mot apres chaque coup

@@ -43,7 +43,7 @@ void remplirtableau(char tab[15][15]) { // tableau bidimensionelle
     tab[7][3] = '&';
     tab[7][5] = 'P';
     tab[7][6] = 'L';
-    tab[7][7] = '#A'; // A
+    tab[7][7] = 'A'; // A#
     tab[7][8] = 'N';
     tab[7][9] = 'E';
     tab[7][10] = 'T';
@@ -271,6 +271,7 @@ int placerMot(char tab[15][15], jetonChevalet chevalet[], int tailleChevalet) {
     motscore *= multiplicateurmot;
 
     printf("score du mot |%s| avec multiplicateur : %d points\n", Mot, motscore);
+
 
     // prime pour un scrabble
     motscore = calculscorechaquejoueur(Mot);
@@ -506,7 +507,7 @@ double chrono() {
 -probleme d'affichage du charactere §
 - le choix 3 du menu n'affichent pas le score des differents joueur
  - J'arrive pas a integrer une logique pour la partie avec l'IA
- - Le temps pour chaque coup ne secoulent pas comme dans une montre
+ - Le temps pour chaque coup ne secoulent pas comme dans une montreer
 
 
  decouverte :
